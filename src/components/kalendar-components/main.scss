@@ -1,3 +1,6 @@
+// index.js or main.js
+@import '../../../node_modules/vuetify/dist/vuetify.css';
+
 * {
   box-sizing: border-box;
 }
@@ -13,6 +16,8 @@
   --hour-row-color: inherit;
   --dark: #212121;
   --lightg: #9e9e9e;
+
+  border-bottom: solid 1px var(--table-cell-border-color);
   &.gstyle {
     --hour-row-color: #212121;
     --main-color: #4285f4;

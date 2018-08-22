@@ -1,6 +1,6 @@
 <template>
 	<li @mouseover.self="mouseMove($event)" @mousedown.self="mouseDown()" @mouseup.self="mouseUp()" :class="{'selected': cellData.selected, 'inbetween': isInBetween, 'first_of_appointment': cell_data.first, 'last_of_appointment': cell_data.last, 'is-an-hour': (index+1)%(60/calendarOptions.split_value) === 0, 'is-active': status === 'popup-initiated' || status === 'creating'}" :style="`height: ${calendarOptions.cell_height}px`">
-		<div v-if="cell_data" class="creator_block" :style="`height: ${distance-1}px`">
+		<!-- <div v-if="cell_data" class="creator_block" :style="`height: ${distance-1}px`">
 			<portal-target name="calendar-card" :slot-props="appointment_props" v-if="!appointment_props.data">
 			</portal-target>
 			<portal-target name="calendar-card-details" :slot-props="appointment_props" v-if="appointment_props.data">
@@ -13,7 +13,7 @@
 		</div>
 		<div v-if="cell_data && status === 'created'" class="created-appointment">
 			<slot></slot>
-		</div>
+		</div> -->
 	</li>
 </template>
 <script>

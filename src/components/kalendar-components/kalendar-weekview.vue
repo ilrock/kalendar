@@ -20,17 +20,48 @@
     </div>
     <div class="blocks">
       <div class="calendar-blocks">
-        <ul class="hours">
+        <!-- <ul class="hours">
           <li class="hour-row-identifier" v-for="hour in (hours || [])" :style="`height:${hourHeight}px`">
             <span>{{formatDate(hour, 'H A')}}</span>
           </li>
-        </ul>
+        </ul> -->
         <div v-show="calendarOptions.style !== 'material_design'" class="hour-indicator-line" :style="`top:calc(${passedtime.percentage}% - 5px)`">
           <span class="time-value">{{passedtime.value}}</span>
           <span class="line"></span>
         </div>
-        <kalendar-days :day="day" class="building-blocks" v-for="day in days" :appointments="appointments" :passed-time="passedtime.percentage" @updateAppointments="updateAppointments" @deleteAppointment="deleteAppointment">
-        </kalendar-days>
+
+        <v-expansion-panel
+          :value="calendarOptions.sections.map(s => true)"
+          expand class="kalendar-sections-container"
+        >
+          <v-expansion-panel-content
+            v-for="(section, index) in calendarOptions.sections"
+            :key="index"
+            style="flex-direction: column;"
+            :style="{'background-color': section.color }"
+          >
+            <div slot="header">{{ section.name }}</div>
+            <div class="section-days-container">
+              <kalendar-days class="section-day" v-for="day in days" :section="section" :day="day" :appointments="appointments" :passed-time="passedtime.percentage" @updateAppointments="updateAppointments" @deleteAppointment="deleteAppointment">
+              </kalendar-days>
+            </div>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <!-- <div class="kalendar-sections-container">
+          <div class="kalendar-section-container" v-for="section in calendarOptions.sections">
+            <v-toolbar height="30" :color="section.color" flat>
+              <v-toolbar-title> {{ section.name }} </v-toolbar-title>
+            </v-toolbar>
+             <span class="section-name" :style="{background: section.color}">
+              {{ section.name }}
+            </span> 
+            <div class="section-days-container">
+              <kalendar-days class="section-day" v-for="day in days" :section="section" :day="day" :appointments="appointments" :passed-time="passedtime.percentage" @updateAppointments="updateAppointments" @deleteAppointment="deleteAppointment">
+            </kalendar-days>
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -69,7 +100,7 @@ export default {
       return { percentage: x, value: time };
     },
     existing_appointments() {
-      return this.calendarOptions.existing_appointments;
+      return this.calendarOptions.appointments;
     },
     appointments: {
       set(val) {
@@ -132,6 +163,7 @@ $theme-color: #e5e5e5;
   .days {
     margin: 0px;
     display: flex;
+    padding-left: 0 !important;
     margin-left: 50px;
     li {
       display: inline-flex;
@@ -207,6 +239,24 @@ $theme-color: #e5e5e5;
     margin-right: var(--space-between-cols);
     border-bottom: solid 1px #e5e5e5;
   }
+}
+
+.kalendar-sections-container{
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 1;
+  .kalendar-section-container{
+    display: flex;
+    flex-direction: column;
+  }
+  .section-days-container{
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.kalendar-sections-container > * {
+  flex: 1 100%;
 }
 
 .blocks {

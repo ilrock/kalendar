@@ -1,5 +1,6 @@
 <template>
-  <div class="calendarium wrapping-all" :class="{'dark': !!calendar_options.dark, 'no-scroll': !scrollable, 'is-day-view': calendar_options.view_type === 'Day', 'gstyle': calendar_options.style === 'material_design', 'non-desktop': isMobile}" @touchstart="scrollable = false" @touchend="scrollable=true" @mouseDown="clearPendingPopups()">
+  <v-app>
+    <div class="calendarium wrapping-all" :class="{'dark': !!calendar_options.dark, 'no-scroll': !scrollable, 'is-day-view': calendar_options.view_type === 'Day', 'gstyle': calendar_options.style === 'material_design', 'non-desktop': isMobile}" @touchstart="scrollable = false" @touchend="scrollable=true" @mouseDown="clearPendingPopups()">
     <portal to="week-navigator-place" class="slotable">
       <div class="week-navigator">
         <slot name="navigation-space">
@@ -41,14 +42,15 @@
       </div>
     </portal>
     <portal to="calendar-card-details" class="slotable">
-      <div slot-scope="appointment_props" class="existing-event">
-        <slot name="details-card" :appointment_props="appointment_props">
-          <h4 style="margin-bottom: 10px">{{appointment_props.title}}</h4>
-          <p>{{appointment_props.description}}</p>
+      <div slot-scope="appointments_props">
+        <slot name="details-card" :appointments_props="appointments_props">
+          <!-- <h4 style="margin-bottom: 10px">{{appointments[0].text}}</h4> -->
+          <!-- <p>{{appointment_props.description}}</p> -->
         </slot>
       </div>
     </portal>
   </div>
+  </v-app>
 </template>
 <script>
 import Vue from 'vue';
@@ -94,12 +96,13 @@ export default {
       dark: false,
       cell_height: 20,
       split_value: 10,
+      sections: [],
       scrollToNow: false,
       current_week: null,
       currently_working_on_date: null,
       current_day: null,
       view_type: 'Month',
-      existing_appointments: {},
+      existing_appointments: [],
       style: 'material_design',
       now: new Date,
     },
@@ -122,9 +125,11 @@ export default {
         let conditions = {
           //dark: (val) => typeof val === 'boolean',
           split_value: (val) => 60 % parseInt(val) === 0,
+          sections: (val) => val.length > 0,
           scrollToNow: (val) => typeof val === 'boolean',
           current_week: (val) => val === null,
           current_day: (val) => isValid(val),
+          appointments: (val) => true,
           view_type: (val) => ['Month', 'Day'].includes(val),
           cell_height: (val) => !isNaN(val),
           style: (val) => ['material_design', 'flat_design'].includes(val),
@@ -168,6 +173,7 @@ export default {
   },
   mounted() {
     this.generateCalendarProperties();
+    this.setViewType();
   },
   provide() {
     const provider = {}
@@ -179,6 +185,9 @@ export default {
     return provider;
   },
   methods: {
+    setViewType(){
+
+    },
     constructWeek() {
       let filtered_appointments = {};
       let date = new Date(this.calendar_options.current_day);

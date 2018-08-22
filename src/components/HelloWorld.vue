@@ -31,7 +31,7 @@
         <span class="time">{{getHours(appointment_props.start_value.value, appointment_props.end_value.value)}}
         </span>
       </div>
-      <div slot="popup-form" slot-scope="{popup_scope}" style="display: flex; flex-direction: column;">
+      <div id="k-popup" slot="popup-form" slot-scope="{popup_scope}" style="display: flex; flex-direction: column;">
         <h4 style="margin-bottom: 10px">Appointment Form</h4>
         <input v-model="new_appointment['title']" type="text" name="title" placeholder="Title">
         <textarea v-model="new_appointment['description']" type="text" name="description" placeholder="Description" rows="2"></textarea>
@@ -40,61 +40,44 @@
           <button @click="completeAppointment(popup_scope)">Save</button>
         </div>
       </div>
-      <div slot="details-card" slot-scope="{appointment_props}">
-        <h4 class="appointment-title">{{appointment_props.data.title}}</h4>
+      <div slot="details-card" slot-scope="{appointments_props}">
+        <v-chip
+          v-for="(appointment, index) in appointments_props.appointments"
+          v-if="appointment.date == appointments_props.day.date && appointment.section == appointments_props.section.name"
+          :key="index"
+          @click="onAppointmentClicked(appointment)"
+          :class="{'appointment-card--last': index == appointments_props.appointments.length - 1, 'appointment-card': index < appointments_props.appointments.length - 1}">
+          <b> {{ appointment.text }} </b> &nbsp; {{ appointment.time }}
+        </v-chip>
+        <!-- <h4 class="appointment-title">{{appointment_props.data.title}}</h4>
         <small class="description" v-show="(appointment_props.end - appointment_props.start) > 2">{{appointment_props.data.description}}</small>
-        <span class="time">{{appointment_props.start_value.value | normalizeDate('hh:mm A')}} - {{appointment_props.end_value.value | normalizeDate('hh:mm A')}}</span>
+        <span class="time">{{appointment_props.start_value.value | normalizeDate('hh:mm A')}} - {{appointment_props.end_value.value | normalizeDate('hh:mm A')}}</span> -->
       </div>
     </kalendar>
   </div>
 </template>
 <script>
 const existing_appointments = [{
-  from: 'Wed Jul 09 2018 04:00:00 GMT+0200 (Central European Summer Time)',
-  to: 'Wed Jul 09 2018 05:00:00 GMT+0200 (Central European Summer Time)',
-  date: '2018-07-09',
+  id: "1",
+  time: "11:00 - 19:00",
+  text: "Andrea",
+  from: 'Mon Aug 20 2018 11:00:00 GMT+0200 (Central European Summer Time)',
+  to: 'Mon Aug 20 2018 19:00:00 GMT+0200 (Central European Summer Time)',
+  date: '2018-08-20',
+  section: "Kitchen",
   data: {
     title: 'Grocery Shoppin',
     description: 'Lorem ipsum dolor sit amet.',
   },
 }, {
+  id: "2",
+  time: "11:00 - 19:00",
+  text: "Andrea",
   from: 'Wed Jul 15 2018 01:00:00 GMT+0200 (Central European Summer Time)',
   to: 'Wed Jul 15 2018 02:40:00 GMT+0200 (Central European Summer Time)',
   date: '2018-07-15',
   data: {
     title: 'Grocery Shoppin',
-    description: 'Lorem ipsum dolor sit amet.',
-  },
-}, {
-  from: 'Wed Jul 22 2018 00:00:00 GMT+0200 (Central European Summer Time)',
-  to: 'Wed Jul 22 2018 04:40:00 GMT+0200 (Central European Summer Time)',
-  date: '2018-07-22',
-  data: {
-    title: 'BarberCheckup',
-    description: 'Lorem ipsum dolor sit amet.',
-  },
-}, {
-  from: 'Wed Jul 24 2018 02:40:00 GMT+0200 (Central European Summer Time)',
-  to: 'Wed Jul 24 2018 03:20:00 GMT+0200 (Central European Summer Time)',
-  date: '2018-07-24',
-  data: {
-    title: 'BarberCheckup',
-    description: 'Lorem ipsum dolor sit amet.',
-  },
-}, {
-  from: 'Thu Jul 28 2018 00:20:00 GMT+0200 (Central European Summer Time)',
-  to: 'Thu Jul 28 2018 01:00:00 GMT+0200 (Central European Summer Time)',
-  date: '2018-07-28',
-  data: {
-    title: 'BarberCheckup',
-    description: 'Lorem ipsum dolor sit amet.',
-  },
-},{
-  from: 'Thu Jul 29 2018 01:00:00 GMT+0200 (Central European Summer Time)',
-  to: 'Thu Jul 29 2018 02:00:00 GMT+0200 (Central European Summer Time)',
-  date: '2018-07-29',
-  data: {
-    title: 'BarberCheckup',
     description: 'Lorem ipsum dolor sit amet.',
   },
 }];
@@ -122,12 +105,33 @@ export default {
       return {
         split_value: this.split_value,
         style: this.style,
+        sections: [
+          {
+            name: "Kitchen",
+            color: "red"
+          },
+          {
+            name: "Service",
+            color: "green"
+          }
+        ],
+        appointments: this.appointments,
         view_type: this.view_type,
         scrollToNow: true,
       }
     },
   },
   methods: {
+    onAppointmentClicked(appointment){
+      // console.log(appointment);
+      this.appointments.forEach((app) => {
+        if (app.id == appointment.id){
+          console.log(app);
+          app.text = "Ciccio";
+          // app.text == "Ciccio"
+        }
+      });
+    },
     getHours(start, end) {
       return `${format(start, 'hh:mm A')} - ${format(end, 'hh:mm A')}`;
     },

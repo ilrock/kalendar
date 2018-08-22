@@ -1,9 +1,26 @@
 <template>
   <ul style="position: relative;" @mouseleave="clearCreatingLeftovers" :class="{'is-weekend': isWeekend, 'is-today': isToday, 'creating': calendarOptions.currently_working_on_date === day.date}" class="kalendar-day">
-    <kalendar-cell v-for="(quarter, index) in day.date_hours" :key="`${day.date}_${index}`" :creator="creator" :day="day" :index="index" :cell-data.sync="quarter" @select="updateCreator" @reset="resetEvents()" @initiatePopup="initiatePopup()" />
-    <div ref="nowIndicator" :class="calendarOptions.style === 'material_design' ? 'hour-indicator-line' : 'hour-indicator-tooltip'" v-if="isToday" :style="`top:calc(${passedTime}% - 5px)`">
-      <span class="line" v-show="calendarOptions.style === 'material_design'"></span>
-    </div>
+    <portal-target 
+      name="calendar-card-details" 
+      :slot-props="{appointments: calendarOptions.appointments, day: day, section: section}" 
+      v-if="calendarOptions.appointments.length > 0">
+		</portal-target>
+    <!-- <v-chip 
+      v-for="(appointment, index) in calendarOptions.appointments"
+      :key="index"
+      :class="{'appointment-card--last': index == calendarOptions.appointments.length - 1, 'appointment-card': index < calendarOptions.appointments.length - 1}"
+      v-if="appointment.date == day.date && appointment.section == section.name"> 
+      <b> {{ appointment.text }} </b> &nbsp; {{ appointment.time }}
+    </v-chip> -->
+    <!-- <v-card color="#F5F5F5" class="appointment-card" v-for="appointment in calendarOptions.appointments" v-if="appointment.date == day.date && appointment.section == section.name">
+      <v-card-title>
+        <b> {{ appointment.time }}</b>
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-card-text>
+        {{ appointment.text }}
+      </v-card-text>
+    </v-card> -->
   </ul>
 </template>
 <script>
@@ -12,14 +29,14 @@ import isToday from 'date-fns/is_today';
 import format from 'date-fns/format';
 
 export default {
-  props: ['day', 'passedTime'],
+  props: ['day', 'passedTime', 'section'],
   components: {
     kalendarCell: () =>
       import ('./kalendar-cell.vue'),
   },
   inject: ['calendarOptions'],
   mounted() {
-    if (this.scrollToNow && this.isToday) this.scrollView();
+    // if (this.scrollToNow && this.isToday) this.scrollView();
   },
   computed: {
     isWeekend() {
@@ -127,11 +144,20 @@ export default {
 ul.kalendar-day {
   position: relative;
   background-color: white;
-  &.is-weekend {
-    background-color: var(--weekend-color);
-  }
+  position: relative;
+  border-right: solid 1px var(--table-cell-border-color);
+  margin-bottom: 0;
+  flex: 1;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 15px !important;
   &.is-today {
-    background-color: var(--current-day-color);
+    background-color: #FEF4F4;
+  }
+  .appointment-card{
+    margin-bottom: 15px;
   }
   .clear {
     position: absolute;
