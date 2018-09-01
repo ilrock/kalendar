@@ -1,7 +1,6 @@
 {
-  "name": "kalendar-vue",
-  "version": "0.1.5",
-  "private": true,
+  "name": "staff-sections-kalendar-vue",
+  "version": "0.1.1",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
