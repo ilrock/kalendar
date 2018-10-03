@@ -38,7 +38,7 @@
             v-for="(section, index) in calendarOptions.sections"
             :key="index"
             style="flex-direction: column;"
-            :style="{'background-color': section.color }"
+            :class="`${section.color}`"
           >
             <div slot="header">{{ section.name }}</div>
             <div class="section-days-container">
