@@ -1,5 +1,14 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("vue"));
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["staff-kalendar"] = factory(require("vue"));
+	else
+		root["staff-kalendar"] = factory(root["Vue"]);
+})((typeof self !== 'undefined' ? self : this), function(__WEBPACK_EXTERNAL_MODULE__8bbf__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -3675,7 +3684,7 @@ module.exports = getISOYear
 /***/ "8bbf":
 /***/ (function(module, exports) {
 
-module.exports = require("vue");
+module.exports = __WEBPACK_EXTERNAL_MODULE__8bbf__;
 
 /***/ }),
 
@@ -4956,14 +4965,14 @@ module.exports = function (object, names) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"/Users/ilrock/Projects/staff_calendar/node_modules/.cache/vue-loader","cacheIdentifier":"1c6128e3-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/kalendar-components/kalendar-weekview.vue?vue&type=template&id=75be1ff4&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"/Users/ilrock/Projects/staff_calendar/node_modules/.cache/vue-loader","cacheIdentifier":"1c6128e3-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/kalendar-components/kalendar-weekview.vue?vue&type=template&id=fbff2b3e&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"calendar-wrap",style:(("--space-between-cols: " + _vm.colsSpace))},[_c('div',{staticClass:"sticky-top"},[_c('portal-target',{attrs:{"name":"week-navigator-place"}}),_c('ul',{staticClass:"days"},_vm._l(((_vm.days || [])),function(ref){
 var date = ref.date;
-return _c('li',{staticClass:"day-indicator",class:{'today': _vm._isToday(date), 'is-before': _vm.isBefore(date)}},[_c('span',{staticClass:"number-date"},[_vm._v(_vm._s(_vm.formatDate(date, 'D')))]),_c('span',{staticClass:"letters-date"},[_vm._v(_vm._s(_vm.formatDate(date,'ddd')))])])})),_c('ul',{staticClass:"all-day"},[_c('span',[_vm._v("All Day")]),_vm._l(((_vm.days || [])),function(date){return _c('li',{class:{'all-today': _vm._isToday(date), 'is-all-day': false},style:(("height:" + (_vm.calendarOptions.cell_height + 5) + "px"))})})],2)],1),(false)?undefined:_vm._e(),_c('div',{staticClass:"blocks"},[_c('div',{staticClass:"calendar-blocks"},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.calendarOptions.style !== 'material_design'),expression:"calendarOptions.style !== 'material_design'"}],staticClass:"hour-indicator-line",style:(("top:calc(" + (_vm.passedtime.percentage) + "% - 5px)"))},[_c('span',{staticClass:"time-value"},[_vm._v(_vm._s(_vm.passedtime.value))]),_c('span',{staticClass:"line"})]),_c('v-expansion-panel',{staticClass:"kalendar-sections-container",attrs:{"value":_vm.calendarOptions.sections.map(function (s) { return true; }),"expand":""}},_vm._l((_vm.calendarOptions.sections),function(section,index){return _c('v-expansion-panel-content',{key:index,staticStyle:{"flex-direction":"column"},style:({'background-color': section.color })},[_c('div',{attrs:{"slot":"header"},slot:"header"},[_vm._v(_vm._s(section.name))]),_c('div',{staticClass:"section-days-container"},_vm._l((_vm.days),function(day){return _c('kalendar-days',{staticClass:"section-day",attrs:{"section":section,"day":day,"appointments":_vm.appointments,"passed-time":_vm.passedtime.percentage},on:{"updateAppointments":_vm.updateAppointments,"deleteAppointment":_vm.deleteAppointment}})}))])}))],1)])])}
+return _c('li',{staticClass:"day-indicator",class:{'today': _vm._isToday(date), 'is-before': _vm.isBefore(date)}},[_c('span',{staticClass:"number-date"},[_vm._v(_vm._s(_vm.formatDate(date, 'D')))]),_c('span',{staticClass:"letters-date"},[_vm._v(_vm._s(_vm.formatDate(date,'ddd')))])])})),_c('ul',{staticClass:"all-day"},[_c('span',[_vm._v("All Day")]),_vm._l(((_vm.days || [])),function(date){return _c('li',{class:{'all-today': _vm._isToday(date), 'is-all-day': false},style:(("height:" + (_vm.calendarOptions.cell_height + 5) + "px"))})})],2)],1),(false)?undefined:_vm._e(),_c('div',{staticClass:"blocks"},[_c('div',{staticClass:"calendar-blocks"},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.calendarOptions.style !== 'material_design'),expression:"calendarOptions.style !== 'material_design'"}],staticClass:"hour-indicator-line",style:(("top:calc(" + (_vm.passedtime.percentage) + "% - 5px)"))},[_c('span',{staticClass:"time-value"},[_vm._v(_vm._s(_vm.passedtime.value))]),_c('span',{staticClass:"line"})]),_c('v-expansion-panel',{staticClass:"kalendar-sections-container",attrs:{"value":_vm.calendarOptions.sections.map(function (s) { return true; }),"expand":""}},_vm._l((_vm.calendarOptions.sections),function(section,index){return _c('v-expansion-panel-content',{key:index,class:("" + (section.color)),staticStyle:{"flex-direction":"column"}},[_c('div',{attrs:{"slot":"header"},slot:"header"},[_vm._v(_vm._s(section.name))]),_c('div',{staticClass:"section-days-container"},_vm._l((_vm.days),function(day){return _c('kalendar-days',{staticClass:"section-day",attrs:{"section":section,"day":day,"appointments":_vm.appointments,"passed-time":_vm.passedtime.percentage},on:{"updateAppointments":_vm.updateAppointments,"deleteAppointment":_vm.deleteAppointment}})}))])}))],1)])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/kalendar-components/kalendar-weekview.vue?vue&type=template&id=75be1ff4&
+// CONCATENATED MODULE: ./src/components/kalendar-components/kalendar-weekview.vue?vue&type=template&id=fbff2b3e&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.split.js
 var es6_regexp_split = __webpack_require__("28a5");
@@ -6873,4 +6882,5 @@ function install(Vue) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=kalendar-vue.common.js.map
+});
+//# sourceMappingURL=staff-kalendar.umd.js.map
