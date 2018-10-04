@@ -150,7 +150,7 @@ ul.kalendar-day {
   flex: 1;
   min-height: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   padding: 15px !important;
   &.is-today {
